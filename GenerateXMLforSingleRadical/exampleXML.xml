@@ -1,0 +1,26 @@
+<annotation>
+	<folder>component_Oracle_dxl</folder>
+	<filename>0006_1.png</filename>
+	<path>D:\oracle data\component_Oracle_dxl\0006_1.png</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>215</width>
+		<height>267</height>
+		<depth>1</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>jing</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>41</xmin>
+			<ymin>48</ymin>
+			<xmax>117</xmax>
+			<ymax>222</ymax>
+		</bndbox>
+	</object>
+</annotation>
