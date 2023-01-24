@@ -1,6 +1,6 @@
-# REZCR
+# RZCR
 
-REZCR is a zero-shot framework for character recognition. It extracts radical information (including radical categories and relative structural relations between radicals) via neural networks, then performs character recognition by exploiting this information for reasoning in a character knowledge graph.
+RZCR is a zero-shot framework for character recognition. It extracts radical information (including radical categories and relative structural relations between radicals) via neural networks, then performs character recognition by exploiting this information for reasoning in a character knowledge graph.
 
 
 ### Files:
