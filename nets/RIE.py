@@ -139,9 +139,7 @@ def conv2d(filter_in, filter_out, kernel_size):
     ]))
 
 
-#------------------------------------------------------------------------#
-#   define the SRB.
-#------------------------------------------------------------------------#
+
 class SRB(nn.Module):
     def __init__(self, dim, out_dim, depth=2):
         super().__init__()
@@ -167,6 +165,42 @@ class SRB(nn.Module):
         x = self.upsample(x)
         out_srb = self.conv(x) + x
         return out_srb
+
+    
+def SRBn(pretrained, **kwargs):
+    model = SRB([1, 2, 8, 8, 4])
+    if pretrained:
+        if isinstance(pretrained, str):
+            model.load_state_dict(torch.load(pretrained))
+        else:
+            raise Exception("darknet request a pretrained path. got [{}]".format(pretrained))
+    return model
+
+
+
+
+class RSREB(nn.Module):
+    def __init__(self):
+
+        super().__init__()
+
+        self.cbam = CBAMBlock(None)
+        self.RABn = RABn(None)
+        self.SRBn = SRBn(None)
+        self.layers_out_filters = [32, 64, 128, 256, 512, 1024]
+
+    def forward(self, input):
+        # input_r = input
+        # input_s = input
+        RAB_r = self.RABn(input)
+        SRB_s = self.SRBn(input)
+
+        # Two options to obtain the combined feature, we process simple add function (or can be concat as commented)
+        # c = torch.cat((RAB_r,SRB_r),dim=1)
+        fused_att = self.cbam(RAB_r + SRB_s)
+
+        return RAB_r + fused_att, SRB_s + fused_att
+    
 
 #------------------------------------------------------------------------#
 #   define last layers for two output projectors.
@@ -210,7 +244,8 @@ class RIEBody(nn.Module):
         super(RIEBody, self).__init__()
         self.config = config
         self.backbone = RABn(None)
-
+        # self.backbone = RSREB(None)
+        
         out_filters = self.backbone.layers_out_filters           # out_filters : [32, 64, 128, 256, 512, 1024]
 
         #------------------------------------------------------------------------#
