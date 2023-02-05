@@ -24,7 +24,7 @@ def readKG(owl_path):
     '''
     g1 = rdflib.Graph()
     g1.parse(owl_path, format="xml")
-    ns = Namespace('http://www.jlu.edu.cn/CR/ontology#')  # 命名空间
+    ns = Namespace('http://www.rzcr.cn/CR/ontology#')  # 命名空间
 
     return(g1, ns)
 
